@@ -1,0 +1,76 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<macrodef name="ivy-retrieve"
+			  description="Загружает все файлы из удаленного репозитария и раскладывает их в папку lib/">
+		<sequential>
+			<!-- Подключим файл кастомных настроек Ivy -->
+			<ivy:settings file="ivysettings.xml"/>
+			<ivy:retrieve
+					pattern="lib/[type]/[artifact].[ext]"
+					overwriteMode="newer"
+					log="quiet"
+					type="jar,source"/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="ivy-report">
+		<sequential>
+			<mkdir dir="output/dependency-report"/>
+			<ivy:report todir="output/dependency-report"/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="java-compile" description="Компилирует java-файлы">
+		<attribute name="srcdir"/>
+		<attribute name="destdir"/>
+		<attribute name="classpathref"/>
+		<sequential>
+			<!-- перед компиляцией создадим папку для классов, если ее еще нет -->
+			<mkdir dir="@{destdir}"/>
+			<!-- компиляция -->
+			<javac
+					srcdir="@{srcdir}"
+					destdir="@{destdir}"
+					classpathref="@{classpathref}"
+					source="1.6"
+					target="1.6"
+					includeantruntime="false"
+					fork="true"
+					memorymaximumsize="128m"
+					debug="true"
+					debuglevel="lines,vars,source"
+					encoding="UTF-8"
+					/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="gwt-compile" description="Компилирует клиентские классы (GWT) в JavaScript">
+		<attribute name="module"/>
+		<attribute name="classpathref"/>
+		<sequential>
+			<mkdir dir="output/www"/>
+			<java fork="yes" classname="com.google.gwt.dev.Compiler" maxmemory="512m" classpathref="@{classpathref}">
+				<arg value="-war"/>
+				<arg value="output/www"/>
+				<arg value="-style"/>
+				<arg value="OBF"/>
+				<arg value="@{module}"/>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="test-run" description="Выполняет тесты">
+		<sequential>
+			<!-- Подключим testng -->
+			<taskdef resource="testngtasks" classpath="lib/jar/testng.jar"/>
+
+			<testng classpathref="test-run-classpath"
+					outputDir="output/report"
+					haltOnfailure="true">
+
+				<classfileset dir="output/test-classes" includes="**/*.class"/>
+			</testng>
+		</sequential>
+	</macrodef>
+
+</project>

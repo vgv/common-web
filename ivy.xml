@@ -1,0 +1,27 @@
+<ivy-module version="2.0">
+	<info organisation="me.vgv.common" module="common-web"/>
+	<dependencies>
+
+		<!-- My libs -->
+		<dependency org="me.vgv.common" name="common-utils" rev="0.1.0" transitive="false"/>
+
+		<!-- Apache Commons -->
+		<dependency org="commons-lang" name="commons-lang" rev="2.6" transitive="false"/>
+
+		<!-- java api -->
+		<dependency org="javax.servlet" name="servlet-api" rev="2.5" transitive="false"/>
+
+		<!-- Google libs -->
+		<dependency org="com.google.guava" name="guava" rev="r09" transitive="false"/>
+
+		<!-- Logging -->
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" transitive="false"/>
+
+		<!-- Ehcache -->
+		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.4.2" transitive="false"/>
+
+		<!-- Guice -->
+		<dependency org="com.google.inject" name="guice" rev="3.0" transitive="false"/>
+
+	</dependencies>
+</ivy-module>
