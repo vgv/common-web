@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
  */
-public final class JspDispatcherImpl {
+public final class JspDispatcherImpl implements JspDispatcher {
 
 	private final ViewResolver viewResolver;
 
