@@ -3,14 +3,13 @@ package me.vgv.common.web.cachemanager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.vgv.common.web.WebDateTimeConstants;
-import net.sf.ehcache.Ehcache;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;import java.lang.Override;import java.lang.String;import java.lang.System;
+import java.io.IOException;
 
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
@@ -18,18 +17,16 @@ import java.io.IOException;import java.lang.Override;import java.lang.String;imp
 @Singleton
 public final class ResourceServlet extends HttpServlet {
 
-	private final Ehcache cache;
-	private ResourceManager resourceManager;
+	private final ResourceManager resourceManager;
 
 	@Inject
-	public ResourceServlet(Ehcache cache) {
-		this.cache = cache;
+	public ResourceServlet(ResourceManager resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		this.resourceManager = new ResourceManager(config.getServletContext(), cache);
 	}
 
 	@Override

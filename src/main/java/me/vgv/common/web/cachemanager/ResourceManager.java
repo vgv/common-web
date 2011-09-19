@@ -1,8 +1,10 @@
 package me.vgv.common.web.cachemanager;
 
 import com.google.common.io.ByteStreams;
+import com.google.inject.Inject;
 import me.vgv.common.utils.CloseUtils;
 import me.vgv.common.utils.hash.HashAlgorithm;
+import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.slf4j.Logger;
@@ -13,7 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.String;import java.util.zip.GZIPOutputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
@@ -25,9 +27,10 @@ public final class ResourceManager {
 	private final ServletContext servletContext;
 	private final Ehcache cache;
 
-	public ResourceManager(ServletContext servletContext, Ehcache cache) {
+	@Inject
+	public ResourceManager(CacheConfiguration cacheConfiguration, ServletContext servletContext, CacheManager cacheManager) {
 		this.servletContext = servletContext;
-		this.cache = cache;
+		this.cache = cacheManager.getEhcache(cacheConfiguration.getCacheName());
 	}
 
 	public ResourceEntry getResource(ResourceKey resourceKey) {
@@ -36,13 +39,13 @@ public final class ResourceManager {
 			return (ResourceEntry) element.getValue();
 		}
 
-		InputStream inputStream = getResourceInputStream(resourceKey.getResourceName());
+		InputStream inputStream = servletContext.getResourceAsStream(resourceKey.getResourceName());
 		if (inputStream == null) {
 			return null;
 		}
 
 		try {
-			byte[] buffer = null;
+			byte[] buffer;
 
 			if (resourceKey.isGzipped()) {
 				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -64,7 +67,7 @@ public final class ResourceManager {
 			resourceKey = new ResourceKey(resourceKey.getResourceName(), resourceKey.isGzipped(), etag);
 			// создадим resourceEntry
 			ResourceEntry resourceEntry = new ResourceEntry(buffer, etag, cacheMode);
-			// собственно, закешируем
+			// собственно, закэшируем
 			cache.put(new Element(resourceKey, resourceEntry));
 
 			return resourceEntry;
@@ -76,11 +79,6 @@ public final class ResourceManager {
 		}
 	}
 
-	private InputStream getResourceInputStream(String resourceName) {
-		// все хорошо, это файл и он читается
-		return servletContext.getResourceAsStream(resourceName);
-	}
-
 	private CacheMode defineCacheMode(String resourceName) {
 		if (resourceName.contains(".cache.")) {
 			return CacheMode.CACHE_FOREVER;
@@ -90,5 +88,4 @@ public final class ResourceManager {
 			return CacheMode.CACHE_BY_ETAG;
 		}
 	}
-
 }

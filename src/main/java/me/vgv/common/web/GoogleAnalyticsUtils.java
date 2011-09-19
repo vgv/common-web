@@ -1,8 +1,6 @@
 package me.vgv.common.web;
 
 import org.apache.commons.lang.StringUtils;
-import java.lang.String;
-import java.lang.StringBuilder;
 
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
@@ -10,7 +8,7 @@ import java.lang.StringBuilder;
 public final class GoogleAnalyticsUtils {
 
 	public static String getPageTrackingCode(String gaAccount) {
-		StringBuilder javascript = new StringBuilder(300);
+		StringBuilder javascript = new StringBuilder(500);
 
 		javascript.append("<script type=\"text/javascript\">");
 		javascript.append("	var _gaq = _gaq || [];");
