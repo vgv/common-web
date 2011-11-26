@@ -28,7 +28,7 @@ public final class ResourceManager {
 	private final Ehcache cache;
 
 	@Inject
-	public ResourceManager(CacheConfiguration cacheConfiguration, ServletContext servletContext, CacheManager cacheManager) {
+	public ResourceManager(ResourceCacheConfiguration cacheConfiguration, ServletContext servletContext, CacheManager cacheManager) {
 		this.servletContext = servletContext;
 		this.cache = cacheManager.getEhcache(cacheConfiguration.getCacheName());
 	}
@@ -36,7 +36,7 @@ public final class ResourceManager {
 	public ResourceEntry getResource(ResourceKey resourceKey) {
 		Element element = cache.get(resourceKey);
 		if (element != null) {
-			return (ResourceEntry) element.getValue();
+			return (ResourceEntry) element.getObjectValue();
 		}
 
 		InputStream inputStream = servletContext.getResourceAsStream(resourceKey.getResourceName());
@@ -57,9 +57,9 @@ public final class ResourceManager {
 				buffer = ByteStreams.toByteArray(inputStream);
 			}
 
-			CacheMode cacheMode = defineCacheMode(resourceKey.getResourceName());
+			ResourceCacheMode cacheMode = defineCacheMode(resourceKey.getResourceName());
 			String etag = null;
-			if (cacheMode == CacheMode.CACHE_BY_ETAG) {
+			if (cacheMode == ResourceCacheMode.CACHE_BY_ETAG) {
 				etag = HashAlgorithm.MD5.generateHash(buffer);
 			}
 
@@ -79,13 +79,13 @@ public final class ResourceManager {
 		}
 	}
 
-	private CacheMode defineCacheMode(String resourceName) {
+	private ResourceCacheMode defineCacheMode(String resourceName) {
 		if (resourceName.contains(".cache.")) {
-			return CacheMode.CACHE_FOREVER;
+			return ResourceCacheMode.CACHE_FOREVER;
 		} else if (resourceName.contains(".nocache.")) {
-			return CacheMode.CACHE_NEVER;
+			return ResourceCacheMode.CACHE_NEVER;
 		} else {
-			return CacheMode.CACHE_BY_ETAG;
+			return ResourceCacheMode.CACHE_BY_ETAG;
 		}
 	}
 }

@@ -2,20 +2,16 @@ package me.vgv.common.web.cachemanager;
 
 import com.google.common.base.Preconditions;
 
-import java.io.Serializable;import java.lang.String;
-
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
  */
-public final class ResourceEntry implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public final class ResourceEntry {
 
 	private final byte[] data;
 	private final String etag;
-	private final CacheMode cacheMode;
+	private final ResourceCacheMode cacheMode;
 
-	public ResourceEntry(byte[] data, String etag, CacheMode cacheMode) {
+	public ResourceEntry(byte[] data, String etag, ResourceCacheMode cacheMode) {
 		Preconditions.checkNotNull(data, "data is not null");
 		Preconditions.checkNotNull(cacheMode, "cacheMode is not null");
 
@@ -32,7 +28,7 @@ public final class ResourceEntry implements Serializable {
 		return etag;
 	}
 
-	public CacheMode getCacheMode() {
+	public ResourceCacheMode getCacheMode() {
 		return cacheMode;
 	}
 

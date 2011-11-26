@@ -1,17 +1,18 @@
-package me.vgv.common.web.cachemanager;
+package me.vgv.common.web.dispatcher;
 
 /**
  * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
  */
-public final class CacheConfiguration {
+public final class DispatchCacheConfiguration {
 
 	private final String cacheName;
 
-	public CacheConfiguration(String cacheName) {
+	public DispatchCacheConfiguration(String cacheName) {
 		this.cacheName = cacheName;
 	}
 
 	public String getCacheName() {
 		return cacheName;
 	}
+
 }

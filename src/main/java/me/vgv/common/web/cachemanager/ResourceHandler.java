@@ -1,36 +1,26 @@
 package me.vgv.common.web.cachemanager;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import me.vgv.common.web.WebDateTimeConstants;
+import me.vgv.common.web.dispatcher.Handler;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
  */
-@Singleton
-public final class ResourceServlet extends HttpServlet {
+public final class ResourceHandler implements Handler {
 
 	private final ResourceManager resourceManager;
 
 	@Inject
-	public ResourceServlet(ResourceManager resourceManager) {
+	public ResourceHandler(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 	}
 
 	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String resourceName = request.getRequestURI().substring(request.getContextPath().length());
 
 		boolean gzipped = false;

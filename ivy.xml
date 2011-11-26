@@ -3,7 +3,7 @@
 	<dependencies>
 
 		<!-- My libs -->
-		<dependency org="me.vgv.common" name="common-utils" rev="0.1.0" transitive="false"/>
+		<dependency org="me.vgv.common" name="common-utils" rev="0.1.1" transitive="false"/>
 
 		<!-- Apache Commons -->
 		<dependency org="commons-lang" name="commons-lang" rev="2.6" transitive="false"/>
@@ -18,10 +18,16 @@
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" transitive="false"/>
 
 		<!-- Ehcache -->
-		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.4.2" transitive="false"/>
+		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.4.6" transitive="false"/>
 
 		<!-- Guice -->
 		<dependency org="com.google.inject" name="guice" rev="3.0" transitive="false"/>
+
+		<!-- Test libraries -->
+		<dependency org="org.mockito" name="mockito-all" rev="1.8.5" transitive="false"/>
+		<dependency org="org.testng" name="testng" rev="6.2" transitive="false"/>
+		<dependency org="com.beust" name="jcommander" rev="1.12" transitive="false"/>
+		<dependency org="org.beanshell" name="bsh" rev="2.0b4" transitive="false"/>
 
 	</dependencies>
 </ivy-module>

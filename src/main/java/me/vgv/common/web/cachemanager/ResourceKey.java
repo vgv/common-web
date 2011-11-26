@@ -2,14 +2,10 @@ package me.vgv.common.web.cachemanager;
 
 import com.google.common.base.Preconditions;
 
-import java.io.Serializable;import java.lang.Object;import java.lang.Override;import java.lang.String;
-
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
  */
-public final class ResourceKey implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public final class ResourceKey {
 
 	private final String resourceName;
 	private final boolean gzipped;
