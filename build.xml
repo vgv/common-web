@@ -43,12 +43,27 @@
 				classpathref="compile-classpath"/>
 	</target>
 
-	<target name="jar" depends="compile">
-		<jar jarfile="dist/common-web.jar" basedir="output/classes"/>
-		<jar jarfile="dist/common-web-sources.jar" basedir="src/main/java" />
+	<target name="compile-test" depends="compile">
+		<java-compile
+				srcdir="src/test/java"
+				destdir="output/test-classes"
+				classpathref="test-compile-classpath"/>
+
+		<copy todir="output/test-classes">
+			<fileset dir="src/test/resources"/>
+		</copy>
 	</target>
 
-	<target name="dist" depends="clean, jar">
+	<target name="jar" depends="compile">
+		<jar jarfile="dist/common-web.jar" basedir="output/classes"/>
+		<jar jarfile="dist/common-web-sources.jar" basedir="src/main/java"/>
+	</target>
+
+	<target name="test" depends="compile-test">
+		<test-run/>
+	</target>
+
+	<target name="dist" depends="clean, test, jar">
 	</target>
 
 </project>

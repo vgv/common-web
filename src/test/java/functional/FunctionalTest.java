@@ -22,7 +22,7 @@ import java.util.Random;
  */
 public class FunctionalTest {
 
-	public static final int SERVER_PORT = 43874;
+	public static final int SERVER_PORT = 43875;
 
 	private Server server;
 

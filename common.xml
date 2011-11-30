@@ -41,6 +41,10 @@
 					debuglevel="lines,vars,source"
 					encoding="UTF-8"
 					/>
+
+			<copy todir="@{destdir}">
+				<fileset dir="@{srcdir}" excludes="**/*.java"/>
+			</copy>
 		</sequential>
 	</macrodef>
 
