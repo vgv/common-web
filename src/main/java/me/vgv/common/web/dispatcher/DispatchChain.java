@@ -1,8 +1,10 @@
 package me.vgv.common.web.dispatcher;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import me.vgv.common.web.dispatcher.http.Request;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -10,20 +12,16 @@ import java.util.List;
  */
 public final class DispatchChain {
 
-	private final Request request;
-
 	private final List<Interceptor> interceptors;
 
 	private final Handler handler;
 
-	public DispatchChain(Request request, List<Interceptor> interceptors, Handler handler) {
-		this.request = request;
+	public DispatchChain(List<Interceptor> interceptors, Handler handler) {
+		Preconditions.checkNotNull(interceptors, "interceptors is null");
+		Preconditions.checkNotNull(handler, "handler is null");
+
 		this.interceptors = ImmutableList.copyOf(interceptors);
 		this.handler = handler;
-	}
-
-	public Request getRequest() {
-		return request;
 	}
 
 	public List<Interceptor> getInterceptors() {
@@ -32,5 +30,10 @@ public final class DispatchChain {
 
 	public Handler getHandler() {
 		return handler;
+	}
+
+	public void handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		InterceptorChain interceptorChain = new RecursiveInterceptorChainImpl(interceptors, handler);
+		interceptorChain.callNext(request, response);
 	}
 }

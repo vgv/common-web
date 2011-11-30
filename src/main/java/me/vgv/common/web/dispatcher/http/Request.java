@@ -3,7 +3,7 @@ package me.vgv.common.web.dispatcher.http;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public final class Request {
 

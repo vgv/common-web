@@ -1,8 +1,8 @@
 package me.vgv.common.web.dispatcher;
 
 import com.google.inject.Inject;
-import me.vgv.common.web.dispatcher.http.Request;
-import me.vgv.common.web.dispatcher.http.RequestThreadLocalContext;
+import com.google.inject.Injector;
+import me.vgv.common.web.dispatcher.http.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -15,73 +15,62 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DispatchHandler implements Handler {
 
+	private final Injector injector;
 	private final DispatchConfiguration dispatchConfiguration;
 	private final Cache cache;
-	private final RequestThreadLocalContext requestThreadLocalContext;
+	private final RequestThreadLocalContext requestContext;
+	private final HttpServletRequestThreadLocalContext httpRequestContext;
+	private final HttpServletResponseThreadLocalContext httpResponseContext;
 
 	@Inject
-	public DispatchHandler(DispatchConfiguration dispatchConfiguration, DispatchCacheConfiguration cacheConfiguration, CacheManager cacheManager, RequestThreadLocalContext requestThreadLocalContext) {
-		this.dispatchConfiguration = dispatchConfiguration;
+	public DispatchHandler(Injector injector) {
+		this.injector = injector;
+
+		// вытащим остальные поля
+		this.dispatchConfiguration = injector.getInstance(DispatchConfiguration.class);
+
+		DispatchCacheConfiguration cacheConfiguration = injector.getInstance(DispatchCacheConfiguration.class);
+		CacheManager cacheManager = injector.getInstance(CacheManager.class);
 		this.cache = cacheManager.getCache(cacheConfiguration.getCacheName());
-		this.requestThreadLocalContext = requestThreadLocalContext;
+
+		this.requestContext = injector.getInstance(RequestThreadLocalContext.class);
+		this.httpRequestContext = injector.getInstance(HttpServletRequestThreadLocalContext.class);
+		this.httpResponseContext = injector.getInstance(HttpServletResponseThreadLocalContext.class);
 	}
 
 	@Override
-	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 		Request request = DispatchUtils.createRequest(httpServletRequest);
 
-		requestThreadLocalContext.set(request);
+		httpRequestContext.set(httpServletRequest);
+		httpResponseContext.set(httpServletResponse);
+		requestContext.set(request);
 		try {
 			DispatchChain chain = getChain(request);
 
 			if (chain == null) {
-				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+				httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
 			} else {
-
+				chain.handle(httpServletRequest, httpServletResponse);
 			}
 		} finally {
-			requestThreadLocalContext.set(null);
+			requestContext.set(null);
+			httpResponseContext.set(null);
+			httpRequestContext.set(null);
 		}
 	}
 
-
 	private DispatchChain getChain(Request request) {
-		Element element = cache.get(new RequestKey(request));
+		Element element = cache.get(new RequestCacheKey(request));
 		if (element != null) {
 			return (DispatchChain) element.getObjectValue();
 		} else {
-			DispatchChain chain = DispatchUtils.createDispatchChain(dispatchConfiguration, request);
+			DispatchChain chain = DispatchUtils.createDispatchChain(dispatchConfiguration, request, injector);
 			if (chain != null) {
-				cache.put(new Element(new RequestKey(request), chain));
+				cache.put(new Element(new RequestCacheKey(request), chain));
 			}
 			return chain;
 		}
 	}
 }
 
-final class RequestKey {
-
-	private final Request request;
-
-	RequestKey(Request request) {
-		this.request = request;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		RequestKey that = (RequestKey) o;
-
-		if (request != null ? !request.equalsHttpInfo(that.request) : that.request != null) return false;
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		return request != null ? request.hashCodeHttpInfo() : 0;
-	}
-
-}

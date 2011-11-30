@@ -10,6 +10,7 @@
 
 		<!-- java api -->
 		<dependency org="javax.servlet" name="servlet-api" rev="2.5" transitive="false"/>
+		<dependency org="javax.inject" name="javax.inject" rev="1" transitive="false"/>
 
 		<!-- Google libs -->
 		<dependency org="com.google.guava" name="guava" rev="r09" transitive="false"/>
@@ -23,11 +24,21 @@
 		<!-- Guice -->
 		<dependency org="com.google.inject" name="guice" rev="3.0" transitive="false"/>
 
+		<dependency org="aopalliance" name="aopalliance" rev="1.0" transitive="false"/>
+
 		<!-- Test libraries -->
 		<dependency org="org.mockito" name="mockito-all" rev="1.8.5" transitive="false"/>
 		<dependency org="org.testng" name="testng" rev="6.2" transitive="false"/>
 		<dependency org="com.beust" name="jcommander" rev="1.12" transitive="false"/>
 		<dependency org="org.beanshell" name="bsh" rev="2.0b4" transitive="false"/>
+
+		<dependency org="org.eclipse.jetty" name="jetty-server" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-servlet" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-io" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-http" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-util" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-security" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-continuation" rev="7.4.5.v20110725" transitive="false"/>
 
 	</dependencies>
 </ivy-module>

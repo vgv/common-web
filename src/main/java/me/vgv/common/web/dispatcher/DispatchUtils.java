@@ -1,6 +1,7 @@
 package me.vgv.common.web.dispatcher;
 
 
+import com.google.inject.Injector;
 import me.vgv.common.web.dispatcher.http.HttpMethod;
 import me.vgv.common.web.dispatcher.http.HttpSchema;
 import me.vgv.common.web.dispatcher.http.Request;
@@ -31,28 +32,31 @@ public final class DispatchUtils {
 		return request.getRequestURI();
 	}
 
-	public static DispatchChain createDispatchChain(DispatchConfiguration dispatchConfiguration, Request request) {
+	public static DispatchChain createDispatchChain(DispatchConfiguration dispatchConfiguration, Request request, Injector injector) {
 		List<Interceptor> interceptors = new ArrayList<Interceptor>();
 		List<Handler> handlers = new ArrayList<Handler>();
 
 		for (DispatchEndpoint dispatchEndpoint : dispatchConfiguration.getDispatchEndpoints()) {
 			if (dispatchEndpoint.match(request)) {
-				Object requestProcessor = dispatchEndpoint.getEndpoint();
-				if (requestProcessor instanceof Interceptor) {
-					interceptors.add((Interceptor) requestProcessor);
+				Class<? extends Service> requestProcessor = dispatchEndpoint.getEndpoint();
+				Service service = injector.getInstance(requestProcessor);
+				if (service instanceof Interceptor) {
+					interceptors.add((Interceptor) service);
+				} else if (service instanceof Handler) {
+					handlers.add((Handler) service);
 				} else {
-					handlers.add((Handler) requestProcessor);
+					throw new IllegalArgumentException("Service class is " + service.getClass() + ". Do you forget to process such type of service?");
 				}
 			}
 		}
 
-		if (interceptors.isEmpty() && handlers.isEmpty()) {
+		if (handlers.isEmpty()) {
 			// никаких обработчиков этого запроса вообще не найдено
 			return null;
 		} else {
-			// все-таки что-то найдено
-			Handler handler = handlers.isEmpty() ? null : handlers.get(0);
-			return new DispatchChain(request, interceptors, handler);
+			// все-таки какой-то обработчик найден, возможно вместе с интерцепторами
+			Handler handler = handlers.get(0);
+			return new DispatchChain(interceptors, handler);
 		}
 	}
 

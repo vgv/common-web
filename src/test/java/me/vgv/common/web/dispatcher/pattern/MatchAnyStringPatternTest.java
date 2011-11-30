@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import java.util.Random;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public class MatchAnyStringPatternTest {
 
@@ -16,7 +16,7 @@ public class MatchAnyStringPatternTest {
 		final Random rnd = new Random();
 		MatchAnyStringPattern anyStringPattern = new MatchAnyStringPattern();
 
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			Assert.assertTrue(anyStringPattern.match(RandomStringUtils.random(rnd.nextInt(20) + 4)));
 		}
 	}

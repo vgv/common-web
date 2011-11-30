@@ -3,7 +3,7 @@ package me.vgv.common.web.dispatcher.pattern;
 import com.google.common.base.Preconditions;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 final class PrefixStringPattern implements Pattern<String> {
 

@@ -1,7 +1,7 @@
 package me.vgv.common.web.dispatcher.pattern;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public interface Pattern<T> {
 

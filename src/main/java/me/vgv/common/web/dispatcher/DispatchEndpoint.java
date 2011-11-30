@@ -17,14 +17,22 @@ public final class DispatchEndpoint {
 	private final List<Pattern<Request>> patterns;
 
 	// это или interceptor или handler
-	private final Object endpoint;
+	private final Class<? extends Service> endpoint;
 
-	private DispatchEndpoint(Object endpoint, List<Pattern<Request>> patterns) {
-		Preconditions.checkArgument((endpoint instanceof Interceptor) || (endpoint instanceof Handler), "endpoint is not Interceptor or Handler");
-		Preconditions.checkNotNull(patterns, "urlPattern is null");
+	public DispatchEndpoint(Class<? extends Service> endpoint, List<Pattern<Request>> patterns) {
+		Preconditions.checkNotNull(endpoint, "endpoint is null");
+		Preconditions.checkNotNull(patterns, "patterns is null");
 
 		this.endpoint = endpoint;
 		this.patterns = ImmutableList.copyOf(patterns);
+	}
+
+	public DispatchEndpoint(Class<? extends Service> endpoint, Pattern<Request> pattern) {
+		Preconditions.checkNotNull(endpoint, "endpoint is null");
+		Preconditions.checkNotNull(pattern, "pattern is null");
+
+		this.endpoint = endpoint;
+		this.patterns = ImmutableList.of(pattern);
 	}
 
 	public boolean match(Request request) {
@@ -39,17 +47,17 @@ public final class DispatchEndpoint {
 		return false;
 	}
 
-	public Object getEndpoint() {
+	public Class<? extends Service> getEndpoint() {
 		return endpoint;
 	}
 
 	public static class Builder {
 
-		private final Object endpoint;
+		private final Class<? extends Service> endpoint;
 
 		private List<Pattern<Request>> patterns = new ArrayList<Pattern<Request>>();
 
-		public Builder(Object endpoint) {
+		public Builder(Class<? extends Service> endpoint) {
 			this.endpoint = endpoint;
 		}
 

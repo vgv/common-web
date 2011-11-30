@@ -5,10 +5,11 @@ import com.google.inject.*;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public abstract class AbstractGuiceServletContextListener implements ServletContextListener {
 
@@ -18,7 +19,7 @@ public abstract class AbstractGuiceServletContextListener implements ServletCont
 		final ServletContext servletContext = sce.getServletContext();
 
 		// создадим Injector
-		List<Module> applicationModules = getModules();
+		List<Module> applicationModules = new ArrayList<Module>(getModules());
 		// создадим модуль с servlet-context'ом чтобы потом можно было его инжектить куда-нибудь
 		applicationModules.add(new AbstractModule() {
 			@Override

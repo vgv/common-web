@@ -10,7 +10,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 final class EndpointPattern implements Pattern<Request> {
 
@@ -20,13 +20,25 @@ final class EndpointPattern implements Pattern<Request> {
 	private final Pattern<String> uriPattern;
 
 	public EndpointPattern(Pattern<String> hostNamePattern, Set<HttpMethod> httpMethods, Set<HttpSchema> httpSchemas, Pattern<String> uriPattern) {
-		Preconditions.checkNotNull(hostNamePattern, "hostNamePattern is null");
-		Preconditions.checkNotNull(httpMethods, "httpMethods is null");
-		Preconditions.checkNotNull(httpSchemas, "httpSchemas is null");
-		Preconditions.checkNotNull(uriPattern, "uriPattern is null");
+		Preconditions.checkArgument(httpMethods == null || !httpMethods.isEmpty(), "httpMethods is empty");
+		Preconditions.checkArgument(httpSchemas == null || !httpSchemas.isEmpty(), "httpSchemas is empty");
 
-		Preconditions.checkArgument(!httpMethods.isEmpty(), "httpMethods is empty");
-		Preconditions.checkArgument(!httpSchemas.isEmpty(), "httpSchemas is empty");
+		if (hostNamePattern == null) {
+			hostNamePattern = Patterns.matchAny();
+		}
+
+		if (httpMethods == null) {
+			httpMethods = EnumSet.allOf(HttpMethod.class);
+		}
+
+		if (httpSchemas == null) {
+			httpSchemas = EnumSet.allOf(HttpSchema.class);
+		}
+
+		if (uriPattern == null) {
+			uriPattern = Patterns.matchAny();
+		}
+
 
 		this.hostNamePattern = hostNamePattern;
 		this.httpMethods = Sets.immutableEnumSet(httpMethods);
@@ -73,16 +85,22 @@ final class EndpointPattern implements Pattern<Request> {
 
 	public static class Builder {
 		private Pattern<String> hostNamePattern;
-		private Set<HttpMethod> httpMethods = EnumSet.noneOf(HttpMethod.class);
-		private Set<HttpSchema> httpSchemas = EnumSet.noneOf(HttpSchema.class);
+		private Set<HttpMethod> httpMethods;
+		private Set<HttpSchema> httpSchemas;
 		private Pattern<String> uriPattern;
 
 		public Builder forMethod(HttpMethod method) {
+			if (httpMethods == null) {
+				httpMethods = EnumSet.noneOf(HttpMethod.class);
+			}
 			this.httpMethods.add(method);
 			return this;
 		}
 
 		public Builder forSchema(HttpSchema httpSchema) {
+			if (httpSchemas == null) {
+				httpSchemas = EnumSet.noneOf(HttpSchema.class);
+			}
 			this.httpSchemas.add(httpSchema);
 			return this;
 		}
