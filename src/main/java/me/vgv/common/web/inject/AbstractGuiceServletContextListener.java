@@ -29,11 +29,11 @@ public abstract class AbstractGuiceServletContextListener implements ServletCont
 		});
 		Injector injector = Guice.createInjector(getStage(), applicationModules);
 
-		// вызовем callback
-		onInjectorCreated(injector);
-
 		// запихнем этот injector в servlet-context чтобы сервлеты могли получить Injector
 		servletContext.setAttribute(InjectConstants.SERVLET_CONTEXT_INJECTOR_NAME, injector);
+
+		// вызовем callback
+		onInjectorCreated(injector);
 	}
 
 	@Override
