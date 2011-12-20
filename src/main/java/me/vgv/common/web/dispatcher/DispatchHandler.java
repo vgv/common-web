@@ -18,7 +18,7 @@ public class DispatchHandler implements Handler {
 	private final Injector injector;
 	private final DispatchConfiguration dispatchConfiguration;
 	private final Cache cache;
-	private final RequestContext requestContext;
+	private final RequestThreadLocalContext requestContext;
 	private final HttpServletRequestThreadLocalContext httpRequestContext;
 	private final HttpServletResponseThreadLocalContext httpResponseContext;
 
@@ -33,7 +33,7 @@ public class DispatchHandler implements Handler {
 		CacheManager cacheManager = injector.getInstance(CacheManager.class);
 		this.cache = cacheManager.getCache(cacheConfiguration.getCacheName());
 
-		this.requestContext = injector.getInstance(RequestContext.class);
+		this.requestContext = injector.getInstance(RequestThreadLocalContext.class);
 		this.httpRequestContext = injector.getInstance(HttpServletRequestThreadLocalContext.class);
 		this.httpResponseContext = injector.getInstance(HttpServletResponseThreadLocalContext.class);
 	}

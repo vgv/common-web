@@ -11,7 +11,7 @@ import me.vgv.common.web.dispatcher.DispatchHandler;
 import me.vgv.common.web.dispatcher.http.HttpServletRequestThreadLocalContext;
 import me.vgv.common.web.dispatcher.http.HttpServletResponseThreadLocalContext;
 import me.vgv.common.web.dispatcher.http.Request;
-import me.vgv.common.web.dispatcher.http.RequestContext;
+import me.vgv.common.web.dispatcher.http.RequestThreadLocalContext;
 import me.vgv.common.web.dispatcher.pattern.Pattern;
 import me.vgv.common.web.dispatcher.pattern.Patterns;
 import me.vgv.common.web.inject.AbstractGuiceServletContextListener;
@@ -215,7 +215,7 @@ public final class TestGuiceServletContextListener extends AbstractGuiceServletC
 				bind(DispatchConfiguration.class).toInstance(configuration);
 
 				// dispatch handler
-				bind(RequestContext.class).toInstance(new RequestContext());
+				bind(RequestThreadLocalContext.class).toInstance(new RequestThreadLocalContext());
 				bind(HttpServletRequestThreadLocalContext.class).toInstance(new HttpServletRequestThreadLocalContext());
 				bind(HttpServletResponseThreadLocalContext.class).toInstance(new HttpServletResponseThreadLocalContext());
 
