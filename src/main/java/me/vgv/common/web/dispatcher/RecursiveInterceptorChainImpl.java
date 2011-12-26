@@ -17,6 +17,7 @@ public final class RecursiveInterceptorChainImpl implements InterceptorChain {
 	public RecursiveInterceptorChainImpl(List<Interceptor> interceptors, Handler handler) {
 		Preconditions.checkNotNull(interceptors, "interceptors is null");
 		Preconditions.checkNotNull(handler, "handler is null");
+
 		this.interceptors = interceptors;
 		this.handler = handler;
 	}

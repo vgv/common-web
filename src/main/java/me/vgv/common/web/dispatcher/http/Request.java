@@ -1,5 +1,7 @@
 package me.vgv.common.web.dispatcher.http;
 
+import com.google.common.base.Preconditions;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -18,6 +20,11 @@ public final class Request {
 	private final String uri;
 
 	public Request(String hostName, HttpMethod httpMethod, HttpSchema httpSchema, String uri) {
+		Preconditions.checkNotNull(hostName, "hostName is null");
+		Preconditions.checkNotNull(httpMethod, "httpMethod is null");
+		Preconditions.checkNotNull(httpSchema, "httpSchema is null");
+		Preconditions.checkNotNull(uri, "uri is null");
+
 		this.hostName = hostName;
 		this.httpMethod = httpMethod;
 		this.httpSchema = httpSchema;
@@ -46,6 +53,10 @@ public final class Request {
 
 	public String getUri() {
 		return uri;
+	}
+
+	public static long getCurrentRequestIDGeneratorValue() {
+		return REQUEST_ID_GENERATOR.get();
 	}
 
 	public boolean equalsHttpInfo(Object o) {

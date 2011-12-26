@@ -1,5 +1,7 @@
 package me.vgv.common.web.dispatcher.http;
 
+import com.google.common.base.Preconditions;
+
 /**
  * @author Vasily Vasilkov (vgv@vgv.me)
  */
@@ -8,6 +10,7 @@ public final class RequestCacheKey {
 	private final Request request;
 
 	public RequestCacheKey(Request request) {
+		Preconditions.checkNotNull(request, "request is null");
 		this.request = request;
 	}
 

@@ -1,5 +1,6 @@
 package me.vgv.common.web.dispatcher;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ public final class DispatchConfiguration {
 	private final List<DispatchEndpoint> dispatchEndpoints;
 
 	public DispatchConfiguration(List<DispatchEndpoint> dispatchEndpoints) {
+		Preconditions.checkNotNull(dispatchEndpoints, "dispatchEndpoints is null");
+
 		this.dispatchEndpoints = ImmutableList.copyOf(dispatchEndpoints);
 	}
 

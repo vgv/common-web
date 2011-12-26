@@ -1,11 +1,14 @@
 package me.vgv.common.web.dispatcher;
 
+import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import me.vgv.common.web.dispatcher.http.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public class DispatchHandler implements Handler {
+
+	private static final Logger log = LoggerFactory.getLogger(DispatchHandler.class);
 
 	private final Injector injector;
 	private final DispatchConfiguration dispatchConfiguration;
@@ -28,14 +33,21 @@ public class DispatchHandler implements Handler {
 
 		// вытащим остальные поля
 		this.dispatchConfiguration = injector.getInstance(DispatchConfiguration.class);
+		Preconditions.checkNotNull(dispatchConfiguration, "dispatchConfiguration is null");
 
 		DispatchCacheConfiguration cacheConfiguration = injector.getInstance(DispatchCacheConfiguration.class);
 		CacheManager cacheManager = injector.getInstance(CacheManager.class);
 		this.cache = cacheManager.getCache(cacheConfiguration.getCacheName());
+		Preconditions.checkNotNull(cache, "cache is null");
 
 		this.requestContext = injector.getInstance(RequestThreadLocalContext.class);
+		Preconditions.checkNotNull(requestContext, "requestContext is null");
+
 		this.httpRequestContext = injector.getInstance(HttpServletRequestThreadLocalContext.class);
+		Preconditions.checkNotNull(httpRequestContext, "httpRequestContext is null");
+
 		this.httpResponseContext = injector.getInstance(HttpServletResponseThreadLocalContext.class);
+		Preconditions.checkNotNull(httpResponseContext, "httpResponseContext is null");
 	}
 
 	@Override

@@ -28,6 +28,10 @@ public final class DispatchServlet extends HttpServlet {
 			if (injector != null) {
 				log.info("Injector has been found in ServletContext");
 				this.dispatchHandler = injector.getInstance(DispatchHandler.class);
+				if (dispatchHandler == null) {
+					log.info("DispatchHandler not found in Injector");
+					throw new ServletException("DispatchHandler not found in Injector");
+				}
 			} else {
 				log.info("Injector not found in ServletContext");
 				throw new ServletException("Injector not found in ServletContext with attribute name " + InjectConstants.SERVLET_CONTEXT_INJECTOR_NAME);

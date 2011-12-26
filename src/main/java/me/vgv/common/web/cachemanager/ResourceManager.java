@@ -1,5 +1,6 @@
 package me.vgv.common.web.cachemanager;
 
+import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
 import me.vgv.common.utils.CloseUtils;
@@ -29,8 +30,14 @@ public final class ResourceManager {
 
 	@Inject
 	public ResourceManager(ResourceCacheConfiguration cacheConfiguration, ServletContext servletContext, CacheManager cacheManager) {
+		Preconditions.checkNotNull(cacheConfiguration, "cacheConfiguration is null");
+		Preconditions.checkNotNull(servletContext, "servletContext is null");
+		Preconditions.checkNotNull(cacheManager, "cacheManager is null");
+
 		this.servletContext = servletContext;
 		this.cache = cacheManager.getEhcache(cacheConfiguration.getCacheName());
+
+		Preconditions.checkNotNull(cache, "cache is null");
 	}
 
 	public ResourceEntry getResource(ResourceKey resourceKey) {

@@ -1,5 +1,6 @@
 package me.vgv.common.web.cachemanager;
 
+import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import me.vgv.common.web.WebDateTimeConstants;
 import me.vgv.common.web.dispatcher.Handler;
@@ -16,6 +17,8 @@ public final class ResourceHandler implements Handler {
 
 	@Inject
 	public ResourceHandler(ResourceManager resourceManager) {
+		Preconditions.checkNotNull(resourceManager, "resourceManager is null");
+
 		this.resourceManager = resourceManager;
 	}
 
