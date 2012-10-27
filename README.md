@@ -1,0 +1,1 @@
+[![Build Status](https://secure.travis-ci.org/vgv/common-web.png)](http://travis-ci.org/vgv/common-web)
