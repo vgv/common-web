@@ -1,15 +1,9 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="common-web" default="dist">
+<project name="common-web" default="dist">
 
 	<import file="common.xml"/>
 
 	<path id="compile-classpath">
 		<fileset dir="lib/jar" includes="**/*.jar"/>
-	</path>
-
-	<path id="gwt-compile-classpath">
-		<path refid="compile-classpath"/>
-		<pathelement location="src/main/java"/>
-		<pathelement location="lib/source/validation-api.jar"/>
 	</path>
 
 	<path id="test-compile-classpath">
@@ -20,11 +14,6 @@
 	<path id="test-run-classpath">
 		<path refid="test-compile-classpath"/>
 		<pathelement location="output/test-classes"/>
-	</path>
-
-	<path id="gwt-run-classpath">
-		<path refid="compile-classpath"/>
-		<pathelement location="src/main/java"/>
 	</path>
 
 	<target name="clean">

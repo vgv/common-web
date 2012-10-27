@@ -3,13 +3,18 @@
 	<macrodef name="ivy-retrieve"
 			  description="Загружает все файлы из удаленного репозитария и раскладывает их в папку lib/">
 		<sequential>
-			<!-- Подключим файл кастомных настроек Ivy -->
+			<taskdef resource="org/apache/ivy/ant/antlib.xml" classpath="ivy.jar"
+					 uri="antlib:org.apache.ivy.ant"/>
+
 			<ivy:settings file="ivysettings.xml"/>
 			<ivy:retrieve
-					pattern="lib/[type]/[artifact].[ext]"
+					pattern="lib/jar/[artifact].[ext]"
 					overwriteMode="newer"
-					log="quiet"
-					type="jar,source"/>
+					type="jar,bundle"/>
+			<ivy:retrieve
+					pattern="lib/source/[artifact].[ext]"
+					overwriteMode="newer"
+					type="source"/>
 		</sequential>
 	</macrodef>
 
@@ -32,8 +37,8 @@
 					srcdir="@{srcdir}"
 					destdir="@{destdir}"
 					classpathref="@{classpathref}"
-					source="1.6"
-					target="1.6"
+					source="7"
+					target="7"
 					includeantruntime="false"
 					fork="true"
 					memorymaximumsize="128m"
@@ -45,21 +50,6 @@
 			<copy todir="@{destdir}">
 				<fileset dir="@{srcdir}" excludes="**/*.java"/>
 			</copy>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="gwt-compile" description="Компилирует клиентские классы (GWT) в JavaScript">
-		<attribute name="module"/>
-		<attribute name="classpathref"/>
-		<sequential>
-			<mkdir dir="output/www"/>
-			<java fork="yes" classname="com.google.gwt.dev.Compiler" maxmemory="512m" classpathref="@{classpathref}">
-				<arg value="-war"/>
-				<arg value="output/www"/>
-				<arg value="-style"/>
-				<arg value="OBF"/>
-				<arg value="@{module}"/>
-			</java>
 		</sequential>
 	</macrodef>
 
