@@ -3,7 +3,7 @@
 	<dependencies>
 
 		<!-- My libs -->
-		<dependency org="me.vgv.common" name="common-utils" rev="0.1.1" transitive="false"/>
+		<dependency org="me.vgv.common" name="common-utils" rev="0.1.2" transitive="false"/>
 
 		<!-- Apache Commons -->
 		<dependency org="commons-lang" name="commons-lang" rev="2.6" transitive="false"/>
@@ -13,13 +13,13 @@
 		<dependency org="javax.inject" name="javax.inject" rev="1" transitive="false"/>
 
 		<!-- Google libs -->
-		<dependency org="com.google.guava" name="guava" rev="r09" transitive="false"/>
+		<dependency org="com.google.guava" name="guava" rev="13.0.1" transitive="false"/>
 
 		<!-- Logging -->
-		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" transitive="false"/>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.6" transitive="false"/>
 
 		<!-- Ehcache -->
-		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.4.6" transitive="false"/>
+		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.5.2" transitive="false"/>
 
 		<!-- Guice -->
 		<dependency org="com.google.inject" name="guice" rev="3.0" transitive="false"/>
@@ -27,8 +27,8 @@
 		<dependency org="aopalliance" name="aopalliance" rev="1.0" transitive="false"/>
 
 		<!-- Test libraries -->
-		<dependency org="org.mockito" name="mockito-all" rev="1.8.5" transitive="false"/>
-		<dependency org="org.testng" name="testng" rev="6.2" transitive="false"/>
+		<dependency org="org.mockito" name="mockito-all" rev="1.9.0" transitive="false"/>
+		<dependency org="org.testng" name="testng" rev="6.8" transitive="false"/>
 		<dependency org="com.beust" name="jcommander" rev="1.12" transitive="false"/>
 		<dependency org="org.beanshell" name="bsh" rev="2.0b4" transitive="false"/>
 
