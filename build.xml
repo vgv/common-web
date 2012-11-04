@@ -43,16 +43,15 @@
 		</copy>
 	</target>
 
-	<target name="jar" depends="compile">
+	<target name="package" depends="compile">
 		<jar jarfile="dist/common-web.jar" basedir="output/classes"/>
 		<jar jarfile="dist/common-web-sources.jar" basedir="src/main/java"/>
 	</target>
 
-	<target name="test" depends="compile-test">
+	<target name="test" depends="clean, compile, compile-test, package">
 		<test-run/>
 	</target>
 
-	<target name="dist" depends="clean, test, jar">
-	</target>
+	<target name="dist" depends="clean, test, package"/>
 
 </project>
