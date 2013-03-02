@@ -30,6 +30,10 @@
 				srcdir="src/main/java"
 				destdir="output/classes"
 				classpathref="compile-classpath"/>
+
+		<copy todir="output/classes">
+			<fileset dir="src/main/resources"/>
+		</copy>
 	</target>
 
 	<target name="compile-test" depends="compile">
@@ -39,6 +43,7 @@
 				classpathref="test-compile-classpath"/>
 
 		<copy todir="output/test-classes">
+			<fileset dir="src/main/resources"/>
 			<fileset dir="src/test/resources"/>
 		</copy>
 	</target>
