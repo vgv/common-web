@@ -11,6 +11,7 @@ import net.sf.ehcache.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,6 +25,13 @@ import java.util.zip.GZIPOutputStream;
 public final class ResourceManager {
 
 	private static final Logger log = LoggerFactory.getLogger(ResourceManager.class);
+
+	private static final ThreadLocal<MimetypesFileTypeMap> MIMETYPES_FILE_TYPE_MAP_THREAD_LOCAL = new ThreadLocal<MimetypesFileTypeMap>() {
+		@Override
+		protected MimetypesFileTypeMap initialValue() {
+			return new MimetypesFileTypeMap();
+		}
+	};
 
 	private final ServletContext servletContext;
 	private final Ehcache cache;
@@ -73,7 +81,7 @@ public final class ResourceManager {
 			// пересоздадим resourceKey, тут мог появиться etag
 			resourceKey = new ResourceKey(resourceKey.getResourceName(), resourceKey.isGzipped(), etag);
 			// создадим resourceEntry
-			ResourceEntry resourceEntry = new ResourceEntry(buffer, etag, cacheMode);
+			ResourceEntry resourceEntry = new ResourceEntry(buffer, etag, cacheMode, MIMETYPES_FILE_TYPE_MAP_THREAD_LOCAL.get().getContentType(resourceKey.getResourceName()));
 			// собственно, закэшируем
 			cache.put(new Element(resourceKey, resourceEntry));
 

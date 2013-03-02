@@ -26,6 +26,8 @@
 
 		<dependency org="aopalliance" name="aopalliance" rev="1.0" transitive="false"/>
 
+		<!--<dependency org="javax.activation" name="activation" rev="1.1.1" transitive="false"/>-->
+
 		<!-- Test libraries -->
 		<dependency org="org.mockito" name="mockito-all" rev="1.9.0" transitive="false"/>
 		<dependency org="org.testng" name="testng" rev="6.8" transitive="false"/>

@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import me.vgv.common.web.WebDateTimeConstants;
 import me.vgv.common.web.dispatcher.Handler;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +49,11 @@ public final class ResourceHandler implements Handler {
 
 			if (gzipped) {
 				response.setHeader("Content-Encoding", "gzip");
+			}
+
+			if (!StringUtils.isBlank(resourceEntry.getMimeType())) {
+				// если MIME-TYPE определен - установим
+				response.setContentType(resourceEntry.getMimeType());
 			}
 
 			switch (resourceEntry.getCacheMode()) {
