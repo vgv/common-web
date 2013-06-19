@@ -19,7 +19,7 @@ public abstract class AbstractGuiceServletContextListener implements ServletCont
 		final ServletContext servletContext = sce.getServletContext();
 
 		// создадим Injector
-		List<Module> applicationModules = new ArrayList<Module>(getModules());
+		List<Module> applicationModules = new ArrayList<Module>(getModules(servletContext));
 		// создадим модуль с servlet-context'ом чтобы потом можно было его инжектить куда-нибудь
 		applicationModules.add(new AbstractModule() {
 			@Override
@@ -41,7 +41,7 @@ public abstract class AbstractGuiceServletContextListener implements ServletCont
 
 	}
 
-	public abstract List<Module> getModules();
+	public abstract List<Module> getModules(ServletContext servletContext);
 
 	public void onInjectorCreated(Injector injector) {
 		// NOP

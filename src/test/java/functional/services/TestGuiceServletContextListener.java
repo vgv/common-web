@@ -19,6 +19,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.management.ManagementService;
 
 import javax.management.MBeanServer;
+import javax.servlet.ServletContext;
 import java.lang.management.ManagementFactory;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.List;
 public final class TestGuiceServletContextListener extends AbstractGuiceServletContextListener {
 
 	@Override
-	public List<Module> getModules() {
+	public List<Module> getModules(ServletContext servletContext) {
 		// global interceptor
 		final Pattern<Request> globalRequestPattern = Patterns.matchRequest(Patterns.matchPrefix("/"));
 		final DispatchEndpoint globalInterceptorEndpoint = new DispatchEndpoint(InterceptorGlobal.class, globalRequestPattern);

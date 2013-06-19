@@ -13,13 +13,13 @@
 		<dependency org="javax.inject" name="javax.inject" rev="1" transitive="false"/>
 
 		<!-- Google libs -->
-		<dependency org="com.google.guava" name="guava" rev="13.0.1" transitive="false"/>
+		<dependency org="com.google.guava" name="guava" rev="14.0.1" transitive="false"/>
 
 		<!-- Logging -->
-		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.6" transitive="false"/>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.5" transitive="false"/>
 
 		<!-- Ehcache -->
-		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.5.2" transitive="false"/>
+		<dependency org="net.sf.ehcache" name="ehcache-core" rev="2.6.5" transitive="false"/>
 
 		<!-- Guice -->
 		<dependency org="com.google.inject" name="guice" rev="3.0" transitive="false"/>
@@ -29,18 +29,18 @@
 		<!--<dependency org="javax.activation" name="activation" rev="1.1.1" transitive="false"/>-->
 
 		<!-- Test libraries -->
-		<dependency org="org.mockito" name="mockito-all" rev="1.9.0" transitive="false"/>
-		<dependency org="org.testng" name="testng" rev="6.8" transitive="false"/>
+		<dependency org="org.mockito" name="mockito-all" rev="1.9.5" transitive="false"/>
+		<dependency org="org.testng" name="testng" rev="6.8.1" transitive="false"/>
 		<dependency org="com.beust" name="jcommander" rev="1.12" transitive="false"/>
 		<dependency org="org.beanshell" name="bsh" rev="2.0b4" transitive="false"/>
 
-		<dependency org="org.eclipse.jetty" name="jetty-server" rev="7.4.5.v20110725" transitive="false"/>
-		<dependency org="org.eclipse.jetty" name="jetty-servlet" rev="7.4.5.v20110725" transitive="false"/>
-		<dependency org="org.eclipse.jetty" name="jetty-io" rev="7.4.5.v20110725" transitive="false"/>
-		<dependency org="org.eclipse.jetty" name="jetty-http" rev="7.4.5.v20110725" transitive="false"/>
-		<dependency org="org.eclipse.jetty" name="jetty-util" rev="7.4.5.v20110725" transitive="false"/>
-		<dependency org="org.eclipse.jetty" name="jetty-security" rev="7.4.5.v20110725" transitive="false"/>
-		<dependency org="org.eclipse.jetty" name="jetty-continuation" rev="7.4.5.v20110725" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-server" rev="7.6.11.v20130520" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-servlet" rev="7.6.11.v20130520" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-io" rev="7.6.11.v20130520" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-http" rev="7.6.11.v20130520" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-util" rev="7.6.11.v20130520" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-security" rev="7.6.11.v20130520" transitive="false"/>
+		<dependency org="org.eclipse.jetty" name="jetty-continuation" rev="7.6.11.v20130520" transitive="false"/>
 
 	</dependencies>
 </ivy-module>
