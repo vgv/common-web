@@ -1,5 +1,8 @@
 apply plugin: "java"
 
+sourceCompatibility = 1.7
+targetCompatibiliy = 1.7
+
 // transitive dependency management is ugly, turn it off
 configurations.all {
 	transitive = false
@@ -16,10 +19,10 @@ dependencies {
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile group: "javax.servlet", name: "servlet-api", version: "2.5"
 	compile group: "javax.inject", name: "javax.inject", version: "1"
-	compile group: "com.google.guava", name: "guava", version: "13.0.1"
+	compile group: "com.google.guava", name: "guava", version: "15.0"
 	compile group: "org.slf4j", name: "slf4j-api", version: "1.6.6"
 	compile group: "com.google.inject", name: "guice", version: "3.0"
-	compile group: "net.sf.ehcache", name: "ehcache-core", version: "2.6.5"
+	compile group: "net.sf.ehcache", name: "ehcache-core", version: "2.6.6"
 	compile group: "aopalliance", name: "aopalliance", version: "1.0"
 	compile group: "javax.activation", name: "activation", version: "1.1.1"
 

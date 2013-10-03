@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
 import me.vgv.common.utils.CloseUtils;
 import me.vgv.common.utils.hash.HashAlgorithm;
+import me.vgv.common.web.cachemanager.provider.ResourceProvider;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.ServletContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,16 +33,16 @@ public final class ResourceManager {
 		}
 	};
 
-	private final ServletContext servletContext;
+	private final ResourceProvider resourceProvider;
 	private final Ehcache cache;
 
 	@Inject
-	public ResourceManager(ResourceCacheConfiguration cacheConfiguration, ServletContext servletContext, CacheManager cacheManager) {
+	public ResourceManager(ResourceCacheConfiguration cacheConfiguration, ResourceProvider resourceProvider, CacheManager cacheManager) {
 		Preconditions.checkNotNull(cacheConfiguration, "cacheConfiguration is null");
-		Preconditions.checkNotNull(servletContext, "servletContext is null");
+		Preconditions.checkNotNull(resourceProvider, "resourceProvider is null");
 		Preconditions.checkNotNull(cacheManager, "cacheManager is null");
 
-		this.servletContext = servletContext;
+		this.resourceProvider = resourceProvider;
 		this.cache = cacheManager.getEhcache(cacheConfiguration.getCacheName());
 
 		Preconditions.checkNotNull(cache, "cache is null");
@@ -54,7 +54,7 @@ public final class ResourceManager {
 			return (ResourceEntry) element.getObjectValue();
 		}
 
-		InputStream inputStream = servletContext.getResourceAsStream(resourceKey.getResourceName());
+		InputStream inputStream = resourceProvider.getResource(resourceKey.getResourceName());
 		if (inputStream == null) {
 			return null;
 		}

@@ -1,5 +1,6 @@
 package me.vgv.common.web.cachemanager;
 
+import me.vgv.common.web.cachemanager.provider.ResourceProvider;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -7,20 +8,19 @@ import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.servlet.ServletContext;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public class ResourceManagerTest {
 
 	@Test(groups = "unit")
 	public void testGetResourceIfFoundInCache() throws Exception {
-		// servlet context
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
+		//
+		ResourceProvider resourceProvider = Mockito.mock(ResourceProvider.class);
 
 		//
 		ResourceCacheConfiguration cacheConfiguration = new ResourceCacheConfiguration("cache_name");
@@ -37,7 +37,7 @@ public class ResourceManagerTest {
 		Mockito.when(cacheManager.getEhcache("cache_name")).thenReturn(ehcache);
 
 		//
-		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, servletContext, cacheManager);
+		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, resourceProvider, cacheManager);
 		Object result = resourceManager.getResource(resourceKey);
 
 		//
@@ -58,20 +58,20 @@ public class ResourceManagerTest {
 		CacheManager cacheManager = Mockito.mock(CacheManager.class);
 		Mockito.when(cacheManager.getEhcache("cache_name")).thenReturn(ehcache);
 
-		// servlet context
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-		Mockito.when(servletContext.getResourceAsStream(Mockito.anyString())).thenReturn(null);
+		//
+		ResourceProvider resourceProvider = Mockito.mock(ResourceProvider.class);
+		Mockito.when(resourceProvider.getResource(Mockito.anyString())).thenReturn(null);
 
 		//
 		ResourceKey resourceKey = new ResourceKey("some_file", true, "asSDF3245fsdq");
 
 		//
-		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, servletContext, cacheManager);
+		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, resourceProvider, cacheManager);
 
 		//
 		Assert.assertNull(resourceManager.getResource(resourceKey));
 		Mockito.verify(ehcache).get(resourceKey);
-		Mockito.verify(servletContext).getResourceAsStream(resourceKey.getResourceName());
+		Mockito.verify(resourceProvider).getResource(resourceKey.getResourceName());
 	}
 
 	@Test(groups = "unit")
@@ -90,24 +90,25 @@ public class ResourceManagerTest {
 		//
 		ResourceKey resourceKey = new ResourceKey("/style.css", false, "asSDF3245fsdq");
 
-		// servlet context
+		//
 		String str = "АПвр3563ывдлпрыSEFW^$3akd';ge";
 		for (int i = 0; i < 1000; i++) {
 			str += "sdlkgher534&slekgfhjфАУГ57одлр4оащзшропыкжезрол";
 		}
 		byte[] data = str.getBytes("UTF-8");
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-		Mockito.when(servletContext.getResourceAsStream(resourceKey.getResourceName())).thenReturn(new ByteArrayInputStream(data));
+
+		ResourceProvider resourceProvider = Mockito.mock(ResourceProvider.class);
+		Mockito.when(resourceProvider.getResource(resourceKey.getResourceName())).thenReturn(new ByteArrayInputStream(data));
 
 		//
-		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, servletContext, cacheManager);
+		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, resourceProvider, cacheManager);
 
 		//
 		ResourceEntry resourceEntry = resourceManager.getResource(resourceKey);
 
 		// проверим вызовы
 		Mockito.verify(ehcache).get(resourceKey);
-		Mockito.verify(servletContext).getResourceAsStream(resourceKey.getResourceName());
+		Mockito.verify(resourceProvider).getResource(resourceKey.getResourceName());
 		Mockito.verify(ehcache).put(Mockito.isA(Element.class));
 
 		// проверим данные
@@ -139,18 +140,18 @@ public class ResourceManagerTest {
 			str += "sdlkgher534&slekgfhjxcvkjndilurhtwoejgeowpughукндгшрщ5289нецдклзфпьжфщыуитож57одлр4оащзшропыкжезрол";
 		}
 		byte[] data = str.getBytes("UTF-8");
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-		Mockito.when(servletContext.getResourceAsStream(resourceKey.getResourceName())).thenReturn(new ByteArrayInputStream(data));
+		ResourceProvider resourceProvider = Mockito.mock(ResourceProvider.class);
+		Mockito.when(resourceProvider.getResource(resourceKey.getResourceName())).thenReturn(new ByteArrayInputStream(data));
 
 		//
-		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, servletContext, cacheManager);
+		ResourceManager resourceManager = new ResourceManager(cacheConfiguration, resourceProvider, cacheManager);
 
 		//
 		ResourceEntry resourceEntry = resourceManager.getResource(resourceKey);
 
 		// проверим вызовы
 		Mockito.verify(ehcache).get(resourceKey);
-		Mockito.verify(servletContext).getResourceAsStream(resourceKey.getResourceName());
+		Mockito.verify(resourceProvider).getResource(resourceKey.getResourceName());
 		Mockito.verify(ehcache).put(Mockito.isA(Element.class));
 
 		// проверим данные

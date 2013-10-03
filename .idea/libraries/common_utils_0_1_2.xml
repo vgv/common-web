@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="common-utils-0.1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/me.vgv.common/common-utils/0.1.2/jar/d30c18d3eafb3320134ba86eb71f350cef743081/common-utils-0.1.2.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/me.vgv.common/common-utils/0.1.2/jar/d30c18d3eafb3320134ba86eb71f350cef743081/common-utils-0.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/me.vgv.common/common-utils/0.1.2/source/2207b9d8aa9217fac81f831d4c89960ab837a7ff/common-utils-0.1.2-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/me.vgv.common/common-utils/0.1.2/source/2207b9d8aa9217fac81f831d4c89960ab837a7ff/common-utils-0.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

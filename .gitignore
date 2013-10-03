@@ -3,7 +3,4 @@
 
 .gradle/
 
-dist/
-lib/
-output/
 build/

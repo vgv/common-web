@@ -25,11 +25,11 @@
     <orderEntry type="library" scope="TEST" name="testng-6.8" level="project" />
     <orderEntry type="library" exported="" name="guice-3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="jetty-continuation-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" exported="" name="guava-13.0.1" level="project" />
-    <orderEntry type="library" exported="" name="ehcache-core-2.6.5" level="project" />
     <orderEntry type="library" exported="" name="aopalliance-1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="jetty-security-7.6.11.v20130520" level="project" />
     <orderEntry type="library" exported="" name="activation-1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="guava-15.0" level="project" />
+    <orderEntry type="library" exported="" name="ehcache-core-2.6.6" level="project" />
   </component>
 </module>
 
