@@ -37,3 +37,12 @@ dependencies {
 	testCompile group: "org.eclipse.jetty", name: "jetty-security", version: "7.6.11.v20130520"
 	testCompile group: "org.eclipse.jetty", name: "jetty-continuation", version: "7.6.11.v20130520"
 }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives sourcesJar
+}
