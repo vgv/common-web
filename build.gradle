@@ -28,6 +28,8 @@ dependencies {
 
 	testCompile group: "org.mockito", name: "mockito-all", version: "1.9.0"
 	testCompile group: "org.testng", name: "testng", version: "6.8"
+	testCompile group: "com.beust", name: "jcommander", version: "1.27"
+	testCompile group: "org.beanshell", name: "bsh", version: "2.0b4"
 
 	testCompile group: "org.eclipse.jetty", name: "jetty-server", version: "7.6.11.v20130520"
 	testCompile group: "org.eclipse.jetty", name: "jetty-servlet", version: "7.6.11.v20130520"
