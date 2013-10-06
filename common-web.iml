@@ -11,25 +11,25 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="common-utils-0.1.2" level="project" />
-    <orderEntry type="library" exported="" name="commons-lang-2.6" level="project" />
-    <orderEntry type="library" exported="" name="slf4j-api-1.6.6" level="project" />
-    <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-servlet-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-util-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-http-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-io-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" scope="TEST" name="mockito-all-1.9.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-server-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" scope="TEST" name="testng-6.8" level="project" />
-    <orderEntry type="library" exported="" name="guice-3.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-continuation-7.6.11.v20130520" level="project" />
-    <orderEntry type="library" exported="" name="aopalliance-1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="jetty-security-7.6.11.v20130520" level="project" />
     <orderEntry type="library" exported="" name="activation-1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="guava-15.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-security-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-io-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" exported="" name="common-utils-0.1.2" level="project" />
     <orderEntry type="library" exported="" name="ehcache-core-2.6.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-servlet-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" scope="TEST" name="mockito-all-1.9.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-util-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" exported="" name="commons-lang-2.6" level="project" />
+    <orderEntry type="library" exported="" name="guava-15.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="testng-6.8" level="project" />
+    <orderEntry type="library" exported="" name="aopalliance-1.0" level="project" />
+    <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" name="guice-3.0" level="project" />
+    <orderEntry type="library" exported="" name="slf4j-api-1.6.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-http-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-server-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" scope="TEST" name="jetty-continuation-7.6.11.v20130520" level="project" />
   </component>
 </module>
 

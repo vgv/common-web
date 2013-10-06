@@ -46,7 +46,7 @@ public class ResourceManagerTest {
 	}
 
 	@Test(groups = "unit")
-	public void testGetResourceIfNotFoundInServletContext() throws Exception {
+	public void testGetResourceIfNotFoundInResourceProvider() throws Exception {
 		//
 		ResourceCacheConfiguration cacheConfiguration = new ResourceCacheConfiguration("cache_name");
 
@@ -75,7 +75,7 @@ public class ResourceManagerTest {
 	}
 
 	@Test(groups = "unit")
-	public void testGetResourceIfFoundInServletContext_Plain() throws Exception {
+	public void testGetResourceIfFoundInResourceProvider_Plain() throws Exception {
 		//
 		ResourceCacheConfiguration cacheConfiguration = new ResourceCacheConfiguration("cache_name");
 
@@ -115,11 +115,10 @@ public class ResourceManagerTest {
 		Assert.assertEquals(resourceEntry.getData(), data);
 		Assert.assertEquals(resourceEntry.getEtag(), "023fb2b39c29d1b99a0c9729dc9205e2");
 		Assert.assertEquals(resourceEntry.getCacheMode(), ResourceCacheMode.CACHE_BY_ETAG);
-		Assert.assertEquals(resourceEntry.getMimeType(), "text/css");
 	}
 
 	@Test(groups = "unit")
-	public void testGetResourceIfFoundInServletContext_Gzip() throws Exception {
+	public void testGetResourceIfFoundInResourceProvider_Gzip() throws Exception {
 		//
 		ResourceCacheConfiguration cacheConfiguration = new ResourceCacheConfiguration("cache_name");
 
@@ -165,7 +164,6 @@ public class ResourceManagerTest {
 
 		Assert.assertEquals(resourceEntry.getEtag(), "1daee29de362f837adc3da044d1914c2");
 		Assert.assertEquals(resourceEntry.getCacheMode(), ResourceCacheMode.CACHE_BY_ETAG);
-		Assert.assertEquals(resourceEntry.getMimeType(), "text/css");
 	}
 
 }

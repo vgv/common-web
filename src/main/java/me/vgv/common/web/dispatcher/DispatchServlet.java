@@ -18,10 +18,25 @@ public final class DispatchServlet extends HttpServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(DispatchServlet.class);
 
-	private DispatchHandler dispatchHandler;
+	private volatile DispatchHandler dispatchHandler;
+	private volatile boolean initialized;
+
+	public DispatchServlet() {
+		this.dispatchHandler = null;
+		this.initialized = false;
+	}
+
+	public DispatchServlet(DispatchHandler dispatchHandler) {
+		this.dispatchHandler = dispatchHandler;
+		this.initialized = true;
+	}
 
 	@Override
 	public void init() throws ServletException {
+		if (initialized) {
+			return;
+		}
+
 		try {
 			// этот Injector сюда должен положить наш ServletContextListener
 			Injector injector = (Injector) this.getServletContext().getAttribute(InjectConstants.SERVLET_CONTEXT_INJECTOR_NAME);
@@ -39,6 +54,7 @@ public final class DispatchServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new DispatchNestedException(e);
 		}
+		initialized = true;
 	}
 
 	@Override
