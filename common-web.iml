@@ -30,6 +30,8 @@
     <orderEntry type="library" scope="TEST" name="jetty-http-7.6.11.v20130520" level="project" />
     <orderEntry type="library" scope="TEST" name="jetty-server-7.6.11.v20130520" level="project" />
     <orderEntry type="library" scope="TEST" name="jetty-continuation-7.6.11.v20130520" level="project" />
+    <orderEntry type="library" scope="TEST" name="bsh-2.0b4" level="project" />
+    <orderEntry type="library" scope="TEST" name="jcommander-1.27" level="project" />
   </component>
 </module>
 
