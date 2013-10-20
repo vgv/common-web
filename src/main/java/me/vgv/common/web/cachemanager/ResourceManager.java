@@ -2,7 +2,6 @@ package me.vgv.common.web.cachemanager;
 
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
-import com.google.inject.Inject;
 import me.vgv.common.utils.hash.HashAlgorithm;
 import me.vgv.common.web.cachemanager.provider.ResourceProvider;
 import net.sf.ehcache.CacheManager;
@@ -35,7 +34,6 @@ public final class ResourceManager {
 	private final ResourceProvider resourceProvider;
 	private final Ehcache cache;
 
-	@Inject
 	public ResourceManager(ResourceCacheConfiguration cacheConfiguration, ResourceProvider resourceProvider, CacheManager cacheManager) {
 		Preconditions.checkNotNull(cacheConfiguration, "cacheConfiguration is null");
 		Preconditions.checkNotNull(resourceProvider, "resourceProvider is null");
@@ -47,10 +45,20 @@ public final class ResourceManager {
 		Preconditions.checkNotNull(cache, "cache is null");
 	}
 
+	public ResourceManager(ResourceProvider resourceProvider) {
+		Preconditions.checkNotNull(resourceProvider, "resourceProvider is null");
+
+		this.resourceProvider = resourceProvider;
+		this.cache = null;
+	}
+
 	public ResourceEntry getResource(ResourceKey resourceKey) {
-		Element element = cache.get(resourceKey);
-		if (element != null) {
-			return (ResourceEntry) element.getObjectValue();
+		// посмотрим в кеше
+		if (cache != null) {
+			Element element = cache.get(resourceKey);
+			if (element != null) {
+				return (ResourceEntry) element.getObjectValue();
+			}
 		}
 
 		try (InputStream inputStream = resourceProvider.getResource(resourceKey.getResourceName())) {
@@ -80,8 +88,11 @@ public final class ResourceManager {
 			resourceKey = new ResourceKey(resourceKey.getResourceName(), resourceKey.isGzipped(), etag);
 			// создадим resourceEntry
 			ResourceEntry resourceEntry = new ResourceEntry(buffer, etag, cacheMode, MIMETYPES_FILE_TYPE_MAP_THREAD_LOCAL.get().getContentType(resourceKey.getResourceName()));
-			// собственно, закэшируем
-			cache.put(new Element(resourceKey, resourceEntry));
+
+			// собственно, закэшируем если кеширование включено
+			if (cache != null) {
+				cache.put(new Element(resourceKey, resourceEntry));
+			}
 
 			return resourceEntry;
 		} catch (IOException e) {
