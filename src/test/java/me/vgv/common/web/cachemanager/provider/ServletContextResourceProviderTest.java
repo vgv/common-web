@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import javax.servlet.ServletContext;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public class ServletContextResourceProviderTest {
 

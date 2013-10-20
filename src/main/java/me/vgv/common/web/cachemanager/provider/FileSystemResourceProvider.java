@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
-public class FileSystemResourceProvider implements ResourceProvider {
+public final class FileSystemResourceProvider implements ResourceProvider {
 
 	private static final Logger log = LoggerFactory.getLogger(FileSystemResourceProvider.class);
 

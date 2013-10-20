@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 
 /**
- * @author Vasily Vasilkov (vasily.vasilkov@gmail.com)
+ * @author Vasily Vasilkov (vgv@vgv.me)
  */
 public class FileSystemResourceProviderTest {
 
