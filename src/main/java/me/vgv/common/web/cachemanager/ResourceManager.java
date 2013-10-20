@@ -3,7 +3,6 @@ package me.vgv.common.web.cachemanager;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
-import me.vgv.common.utils.CloseUtils;
 import me.vgv.common.utils.hash.HashAlgorithm;
 import me.vgv.common.web.cachemanager.provider.ResourceProvider;
 import net.sf.ehcache.CacheManager;
@@ -54,19 +53,18 @@ public final class ResourceManager {
 			return (ResourceEntry) element.getObjectValue();
 		}
 
-		InputStream inputStream = resourceProvider.getResource(resourceKey.getResourceName());
-		if (inputStream == null) {
-			return null;
-		}
+		try (InputStream inputStream = resourceProvider.getResource(resourceKey.getResourceName())) {
+			if (inputStream == null) {
+				return null;
+			}
 
-		try {
 			byte[] buffer;
 
 			if (resourceKey.isGzipped()) {
-				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-				OutputStream outputStream = new GZIPOutputStream(byteArrayOutputStream);
-				ByteStreams.copy(inputStream, outputStream);
-				outputStream.close();
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(4 * 1024);
+				try (OutputStream outputStream = new GZIPOutputStream(byteArrayOutputStream)) {
+					ByteStreams.copy(inputStream, outputStream);
+				}
 				buffer = byteArrayOutputStream.toByteArray();
 			} else {
 				buffer = ByteStreams.toByteArray(inputStream);
@@ -89,8 +87,6 @@ public final class ResourceManager {
 		} catch (IOException e) {
 			log.error("can't read static file from ServletContext", e);
 			return null;
-		} finally {
-			CloseUtils.close(inputStream);
 		}
 	}
 

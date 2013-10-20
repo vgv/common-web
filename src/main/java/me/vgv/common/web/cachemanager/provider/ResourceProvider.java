@@ -1,5 +1,6 @@
 package me.vgv.common.web.cachemanager.provider;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -7,6 +8,6 @@ import java.io.InputStream;
  */
 public interface ResourceProvider {
 
-	public InputStream getResource(String resourceName);
+	public InputStream getResource(String resourceName) throws IOException;
 
 }

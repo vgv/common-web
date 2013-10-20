@@ -1,6 +1,7 @@
 package me.vgv.common.web.cachemanager.provider;
 
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -15,7 +16,7 @@ public final class ServletContextResourceProvider implements ResourceProvider {
 	}
 
 	@Override
-	public InputStream getResource(String resourceName) {
+	public InputStream getResource(String resourceName) throws IOException {
 		return servletContext.getResourceAsStream(resourceName);
 	}
 }
